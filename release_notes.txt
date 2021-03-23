@@ -1,1 +1,4 @@
-Flutter cicd demo...
+Flutter cicd demo. a new beta apk is available for testing.
+
+Instructions:
+ -

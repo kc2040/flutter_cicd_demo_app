@@ -25,6 +25,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+//kc
+////apply plugin: 'com.google.firebase.appdistribution'
+apply plugin: 'com.google.gms.google-services' // Google Services plugin
+//
+
+
+//kc
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+//end kc
+
 android {
     compileSdkVersion 30
 
@@ -44,11 +58,32 @@ android {
 
     }
 
+    //kc comment this when needed
+    /*signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }*/
+    //end kc
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+
+            //signingConfig signingConfigs.release
+
             signingConfig signingConfigs.debug
+
+
+//            firebaseAppDistribution{
+//                serviceCredentialsFile="./google-services.json"
+//                releaseNotesFile="../release-notes.txt"
+//                testers="niranjan.kc@randstadusa.com" //use file and group
+//            }
         }
     }
 }
@@ -61,6 +96,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //kc
+    implementation platform('com.google.firebase:firebase-bom:26.7.0')
+
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
